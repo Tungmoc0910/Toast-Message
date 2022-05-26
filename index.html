@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+    
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="toast">
+        
+    </div>
+
+    <div>
+        <div onclick="showsuccessToast();" class="btn btn--success">Show success message</div>
+        <div onclick="showinfoToast();" class="btn btn--info">Show info message</div>
+        <div onclick="showwarnToast();" class="btn btn--warn">Show warning message</div>
+        <div onclick="showerrorToast();" class="btn btn--danger">Show error message</div>
+    </div>
+    
+    <script>
+        function toast({
+            title='',
+            message='',
+            type='info',
+            duration=3000
+        }) {
+            const main=document.getElementById('toast');
+            if(main){
+                const toast =document.createElement('div');
+                //auto remove toast
+                const autoRemoveId=setTimeout(function(){
+                    main.removeChild(toast);
+                },duration+1000);
+                //remove toast when click
+                toast.onclick = function(e){
+                    if(e.target.closest('.toast__close'))
+                    main.removeChild(toast);
+                    clearTimeout(autoRemoveId);
+                }
+
+
+                const icons={
+                    success: 'fa-solid fa-circle-check',
+                    info: 'fa-solid fa-circle-info',
+                    warning: 'fa-solid fa-circle-exclamation',
+                    error: 'fa-solid fa-circle-exclamation',
+                };
+                const icon=icons[type];
+                const delay =(duration/1000).toFixed(2);
+             
+                toast.classList.add('toast', `toast--${type}`);
+                toast.style.animation=`slideInleft ease 0.3s, Fadeout linear 1s ${delay}s forwards`;
+                toast.innerHTML=` 
+                <div class="toast__icon">
+                    <i class="${icon}"></i>
+                </div>
+                <div class="toast__body">
+                    <h3 class="toast__title">
+                        ${title}
+                    </h3>
+                    <p class="toast__message">
+                        ${message}
+                    </p>
+                </div>
+                <div class="toast__close">
+                    <i class="fa-solid fa-xmark"></i>
+                </div>
+                `;
+                main.appendChild(toast);
+                
+            }
+        }
+
+
+        function showsuccessToast(){
+                toast({
+                title: 'Success!',
+                message: 'You are welcome!',
+                type:'success',
+                duration: 5000
+        })
+        }
+        function showinfoToast(){
+                toast({
+                title: 'Info',
+                message: 'Just some information for you.',
+                type:'info',
+                duration: 5000
+        })
+        }
+        function showwarnToast(){
+                toast({
+                title: 'Alert!',
+                message: 'You are being warned.',
+                type:'warning',
+                duration: 5000
+        })
+        }
+        
+        function showerrorToast(){
+                toast({
+                title: 'Oops!',
+                message: 'This is not good!',
+                type:'error',
+                duration: 5000
+        })
+        }
+    </script>
+  
+    <!-- <div>
+        //Success
+        <div class="toast toast--success">
+            <div class="toast__icon">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+            <div class="toast__body">
+                <h3 class="toast__title">
+                    Success
+                </h3>
+                <p class="toast__message">
+                    This would be to send out the wrong message to industry
+                </p>
+            </div>
+            <div class="toast__close">
+                <i class="fa-solid fa-xmark"></i>
+            </div>
+        </div>
+       // Info
+        <div class="toast toast--info">
+            <div class="toast__icon">
+                <i class="fa-solid fa-circle-info"></i>
+            </div>
+            <div class="toast__body">
+                <h3 class="toast__title">
+                    Info
+                </h3>
+                <p class="toast__message">
+                    This would be to send out the wrong message to industry
+                </p>
+            </div>
+            <div class="toast__close">
+                <i class="fa-solid fa-xmark"></i>
+            </div>
+        </div>
+        //Warning
+        <div class="toast toast--warning">
+            <div class="toast__icon">
+                <i class="fa-solid fa-circle-exclamation"></i>
+            </div>
+            <div class="toast__body">
+                <h3 class="toast__title">
+                    Warning
+                </h3>
+                <p class="toast__message">
+                    This would be to send out the wrong message to industry
+                </p>
+            </div>
+            <div class="toast__close">
+                <i class="fa-solid fa-xmark"></i>
+            </div>
+        </div>
+        //Erorr
+        <div class="toast toast--error">
+            <div class="toast__icon">
+                <i class="fa-solid fa-bug"></i>
+            </div>
+            <div class="toast__body">
+                <h3 class="toast__title">
+                    Error
+                </h3>
+                <p class="toast__message">
+                    This would be to send out the wrong message to industry
+                </p>
+            </div>
+            <div class="toast__close">
+                <i class="fa-solid fa-xmark"></i>
+            </div>
+        </div>
+    </div> -->
+    
+    
+</body>
+</html>
